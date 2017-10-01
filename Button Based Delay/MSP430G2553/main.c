@@ -1,10 +1,9 @@
 #include <msp430.h>
 
-unsigned int time = 0;              //Define the integers, which are used later.
+unsigned int count, temp, time, button, lastButton, buttonOut, lastDebounce, debounce = 0;   //Define the integers, which are used later.
 unsigned int div = 4;
+#define temp (P1IN & BIT3)
 #define BUTTON BIT3                 //Define "BUTTON" as bit 3
-
-long Mils_Count(void);
 
 void main(void)
 {
@@ -29,7 +28,17 @@ void main(void)
 
     __bis_SR_register(LPM0 + GIE);  //Enter low power mode with interrupts.
 
-    while (1){}
+    while(1){
+        if (button != lastButton)
+            lastDebounce = count;
+        if ((count - lastDebounce) > 50)
+            buttonOut = button;
+        if (buttonOut == 1)
+            temp = temp + 1;
+        else
+            div = 65536/temp;
+        lastButton = button;
+    }
 
 }
 
@@ -37,13 +46,14 @@ void main(void)
 #pragma vector=TIMER0_A0_VECTOR
 __interrupt void Timer_A (void) {
     time = (time + 1) % div;            //Increment 'time' every clock tick and then clock divide it by 'div'
+    count++;
     if (time == 0)
         P1OUT ^= 0x41;                  //Toggle the LED whenever time % div == 0.
-    }
 }
 
 #pragma vector=PORT1_VECTOR             //Set the port 1 interrupt routine
 __interrupt void Port_1(void) {
+    button ^= 1;                        //Toggle the button variable.
     P1IFG &= ~BUTTON;                   //P1.3 IFG cleared
     P1IES ^= BUTTON;                    //Toggle the interrupt edge so that this interrupt triggers on the button press and release.
 }
