@@ -45,6 +45,7 @@ __interrupt void Port_1(void) {
     button ^= 1;                        //Toggle the button variable.
     P1IE &= ~BUTTON;                    //Turn off the button interrupt enable.
     __delay_cycles(1);                  //Delay for one clock cycle to debounce the button.
+    //FIX THIS DEBOUNCING! Disable the interrupt enable, turn on a timer, have the timer turn itself off and turn on the button enable.
     P1IE |= BUTTON;                     //Turn on the button interrupt enable.
 
     if ((button == 1) && (lastButton == 0)){    //If the button has been pressed, this if statement will trigger.
