@@ -18,10 +18,13 @@ void main(void)
     P1IES |= BUTTON;                //Set the P1.3 interrupt to trigger on a high->low edge.
     P1IFG &= ~BUTTON;               //Clear the interrupt flag register on P1.3
 
-    CCTL0 = CCIE;                   //Enable interrupts for the first capture/compare register.
-    TACTL = TASSEL_2 + MC_2;        //Set the Clock_A control to:
+    TA0CCTL0 = CCIE;                //Enable interrupts for the first capture/compare register.
+    TA0CTL = TASSEL_2 + MC_2;       //Set the Timer_A0 control to:
                                     //1. TASSEL_2 which selects SMCLK, the internal 1MHz clock.
                                     //2. MC_2 which selects the continuous counting mode.
+
+    TA1CCTL0 = 255;                //Do the same thing for Timer_A1, but set the interrupt trigger at 255.
+    TA1CTL = TASSEL_2 + MC_0;       //MC_0 selects disabled mode for timer A1.
 
     __enable_interrupt();           //Enable interrupts.
 
@@ -40,13 +43,17 @@ __interrupt void Timer_A (void) {
         overflows++;                    //If the capture/compare register says that the interrupt was caused by an overflow, increment 'overflows'.
 }
 
+#pragma vector=TIMER0_A1_VECTOR
+__interrupt void Timer_A (void) {
+    P1IE |= BUTTON;                     //Turn on the button interrupt enable.
+    TA1CTL = MC_0;                      //Disable Timer_A1.
+}
+
 #pragma vector=PORT1_VECTOR             //Set the port 1 interrupt routine
 __interrupt void Port_1(void) {
     button ^= 1;                        //Toggle the button variable.
     P1IE &= ~BUTTON;                    //Turn off the button interrupt enable.
-    __delay_cycles(1);                  //Delay for one clock cycle to debounce the button.
-    //FIX THIS DEBOUNCING! Disable the interrupt enable, turn on a timer, have the timer turn itself off and turn on the button enable.
-    P1IE |= BUTTON;                     //Turn on the button interrupt enable.
+    TA1CTL = MC_2;                      //Enable Timer_A1.
 
     if ((button == 1) && (lastButton == 0)){    //If the button has been pressed, this if statement will trigger.
         timeStart = count;                      //Store the current count in 'timeStart'.

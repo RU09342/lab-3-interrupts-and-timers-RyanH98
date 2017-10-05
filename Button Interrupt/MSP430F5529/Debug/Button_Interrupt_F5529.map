@@ -1,7 +1,7 @@
 ******************************************************************************
-                  MSP430 Linker PC v16.9.4                     
+                  MSP430 Linker PC v16.9.3                     
 ******************************************************************************
->> Linked Sat Sep 30 15:44:45 2017
+>> Linked Thu Oct 05 13:26:38 2017
 
 OUTPUT FILE NAME:   <Button_Interrupt_F5529.out>
 ENTRY POINT SYMBOL: "_c_int00_noinit_noargs_noexit"  address: 00004400
@@ -201,7 +201,7 @@ MODULE SUMMARY
     +--+------------------+------+---------+---------+
        Total:             64     2         0      
                                                   
-    C:\ti\ccsv7\tools\compiler\ti-cgt-msp430_16.9.4.LTS\lib\rts430x_lc_rd_eabi.lib
+    C:\ti\ccsv7\tools\compiler\ti-cgt-msp430_16.9.3.LTS\lib\rts430x_lc_rd_eabi.lib
        boot_special.obj   18     0         0      
        isr_trap.obj       8      0         0      
        exit.obj           6      0         0      
