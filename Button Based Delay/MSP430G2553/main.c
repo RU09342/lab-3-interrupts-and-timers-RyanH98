@@ -46,23 +46,27 @@ __interrupt void Timer_A0 (void) {
 
 #pragma vector=TIMER1_A1_VECTOR
 __interrupt void Timer_A1 (void) {
-    P1IE |= BUTTON;                     //Turn on the button interrupt enable.
-    TA1CTL = TASSEL_2 + MC_0;           //Disable Timer_A1.
+    if (TAIV == 0x0E){
+        P1IE |= BUTTON;                     //Turn on the button interrupt enable.
 
-    if ((button == 1) && (lastButton == 0)){    //If the button has been pressed, this if statement will trigger.
-        timeStart = count;                      //Store the current count in 'timeStart'.
-        overflows = 0;                          //Reset 'overflows'.
-    }
-    else if ((button == 0) && (lastButton == 1)){               //If the button has been depressed, this if statement will trigger.
-        timeEnd = count;                                        //Store the current count in 'timeEnd'.
-        div = ((timeEnd + (overflows * 65536)) - timeStart);    //Update div to be equal to the difference in 'timeEnd' and 'timeStart'...
+        TA1CTL = TASSEL_2 + MC_0;           //Disable Timer_A1.
+
+        if ((button == 1) && (lastButton == 0)){    //If the button has been pressed, this if statement will trigger.
+            timeStart = count;                      //Store the current count in 'timeStart'.
+            overflows = 0;                          //Reset 'overflows'.
+        }
+        else if ((button == 0) && (lastButton == 1)){               //If the button has been depressed, this if statement will trigger.
+            timeEnd = count;                                        //Store the current count in 'timeEnd'.
+            div = ((timeEnd + (overflows * 65536)) - timeStart);    //Update div to be equal to the difference in 'timeEnd' and 'timeStart'...
                                                                 //...taking into account the amount of overflows that occurred between the two.
+        }
+
+        lastButton = button;                //Update 'lastButton' with 'button'.
+
+        P1IFG &= ~BUTTON;                   //P1.3 IFG cleared
+        P1IES ^= BUTTON;                    //Toggle the interrupt edge so that this interrupt triggers on the button press and release.
+
     }
-
-    lastButton = button;                //Update 'lastButton' with 'button'.
-
-    P1IFG &= ~BUTTON;                   //P1.3 IFG cleared
-    P1IES ^= BUTTON;                    //Toggle the interrupt edge so that this interrupt triggers on the button press and release.
 }
 
 #pragma vector=PORT1_VECTOR             //Set the port 1 interrupt routine
