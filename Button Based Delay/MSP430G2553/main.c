@@ -2,6 +2,7 @@
 
 unsigned int count, time, button, lastButton, timeStart, timeEnd, overflows = 0;   //Define the integers, which are used later.
 unsigned int div = 4;
+unsigned int debouncing = 0;
 #define BUTTON BIT3                 //Define "BUTTON" as bit 3
 
 void main(void)
@@ -23,10 +24,6 @@ void main(void)
                                     //1. TASSEL_2 which selects SMCLK, the internal 1MHz clock.
                                     //2. MC_2 which selects the continuous counting mode.
 
-    TA1CCTL0 = CCIE;                //Do the same thing for Timer_A1.
-    TA1CCR0 = 16000;                //Set the interrupt trigger at 16000.
-    TA1CTL = TASSEL_2 + MC_0;       //MC_0 selects disabled mode for timer A1.
-
     __enable_interrupt();           //Enable interrupts.
 
     __bis_SR_register(GIE);         //General interrupt enable.
@@ -44,34 +41,21 @@ __interrupt void Timer_A0 (void) {
         overflows++;                    //If the capture/compare register says that the interrupt was caused by an overflow, increment 'overflows'.
 }
 
-#pragma vector=TIMER1_A1_VECTOR
-__interrupt void Timer_A1 (void) {
-    if (TAIV == 0x0E){
-        P1IE |= BUTTON;                     //Turn on the button interrupt enable.
-
-        TA1CTL = TASSEL_2 + MC_0;           //Disable Timer_A1.
-
-        if ((button == 1) && (lastButton == 0)){    //If the button has been pressed, this if statement will trigger.
-            timeStart = count;                      //Store the current count in 'timeStart'.
-            overflows = 0;                          //Reset 'overflows'.
-        }
-        else if ((button == 0) && (lastButton == 1)){               //If the button has been depressed, this if statement will trigger.
-            timeEnd = count;                                        //Store the current count in 'timeEnd'.
-            div = ((timeEnd + (overflows * 65536)) - timeStart);    //Update div to be equal to the difference in 'timeEnd' and 'timeStart'...
-                                                                //...taking into account the amount of overflows that occurred between the two.
-        }
-
-        lastButton = button;                //Update 'lastButton' with 'button'.
-
-        P1IFG &= ~BUTTON;                   //P1.3 IFG cleared
-        P1IES ^= BUTTON;                    //Toggle the interrupt edge so that this interrupt triggers on the button press and release.
-
-    }
-}
-
 #pragma vector=PORT1_VECTOR             //Set the port 1 interrupt routine
 __interrupt void Port_1(void) {
     button ^= 1;                        //Toggle the button variable.
-    TA1CTL = TASSEL_2 + MC_2;           //Enable Timer_A1.
-    P1IE &= ~BUTTON;                    //Turn off the button interrupt enable.
+    if ((button == 1) && (lastButton == 0)){    //If the button has been pressed, this if statement will trigger.
+        timeStart = count;                      //Store the current count in 'timeStart'.
+        overflows = 0;                          //Reset 'overflows'.
+    }
+    else if ((button == 0) && (lastButton == 1)){               //If the button has been depressed, this if statement will trigger.
+        timeEnd = count;                                        //Store the current count in 'timeEnd'.
+        div = ((timeEnd + (overflows * 65536)) - timeStart);    //Update div to be equal to the difference in 'timeEnd' and 'timeStart'...
+                                                            //...taking into account the amount of overflows that occurred between the two.
+    }
+
+    lastButton = button;                //Update 'lastButton' with 'button'.
+
+    P1IFG &= ~BUTTON;                   //P1.3 IFG cleared
+    P1IES ^= BUTTON;                    //Toggle the interrupt edge so that this interrupt triggers on the button press and release.
 }
