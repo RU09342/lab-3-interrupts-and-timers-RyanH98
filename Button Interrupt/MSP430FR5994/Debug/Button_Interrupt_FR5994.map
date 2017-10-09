@@ -1,7 +1,7 @@
 ******************************************************************************
-                  MSP430 Linker PC v16.9.3                     
+                  MSP430 Linker PC v16.9.4                     
 ******************************************************************************
->> Linked Thu Oct 05 13:36:41 2017
+>> Linked Mon Oct 09 11:39:42 2017
 
 OUTPUT FILE NAME:   <Button_Interrupt_FR5994.out>
 ENTRY POINT SYMBOL: "_c_int00_noinit_noargs_noexit_mpu"  address: 00004000
@@ -80,7 +80,7 @@ MEMORY CONFIGURATION
   INT53                 0000fffa   00000002  00000002  00000000  RWIX
   INT54                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FRAM2                 00010000   00034000  00000072  00033f8e  RWIX
+  FRAM2                 00010000   00034000  00000076  00033f8a  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -258,11 +258,11 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.obj (.reset)
 
-.text      0    00010000    00000072     
+.text      0    00010000    00000076     
                   00010000    00000040     main.obj (.text:main)
-                  00010040    00000028     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
-                  00010068    00000006     rts430x_lc_rd_eabi.lib : exit.obj (.text:abort)
-                  0001006e    00000004                            : pre_init.obj (.text:_system_pre_init)
+                  00010040    0000002c     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
+                  0001006c    00000006     rts430x_lc_rd_eabi.lib : exit.obj (.text:abort)
+                  00010072    00000004                            : pre_init.obj (.text:_system_pre_init)
 
 MODULE SUMMARY
 
@@ -274,11 +274,11 @@ MODULE SUMMARY
        Total:             76     2         0      
                                                   
     C:\ti\ccsv7\ccs_base\msp430\lib\FR59xx\MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib
-       mpu_init.o         40     0         0      
+       mpu_init.o         44     0         0      
     +--+------------------+------+---------+---------+
-       Total:             40     0         0      
+       Total:             44     0         0      
                                                   
-    C:\ti\ccsv7\tools\compiler\ti-cgt-msp430_16.9.3.LTS\lib\rts430x_lc_rd_eabi.lib
+    C:\ti\ccsv7\tools\compiler\ti-cgt-msp430_16.9.4.LTS\lib\rts430x_lc_rd_eabi.lib
        boot_special.obj   22     0         0      
        isr_trap.obj       8      0         0      
        exit.obj           6      0         0      
@@ -325,7 +325,7 @@ MODULE SUMMARY
                                                   
        Stack:             0      0         160    
     +--+------------------+------+---------+---------+
-       Grand Total:       156    76        160    
+       Grand Total:       160    76        160    
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
@@ -593,7 +593,7 @@ address   name
 000004bc  BIN2BCD                          
 000004bd  BIN2BCD_H                        
 000004bc  BIN2BCD_L                        
-00010068  C$$EXIT                          
+0001006c  C$$EXIT                          
 0000043e  CAPTIO0CTL                       
 0000043f  CAPTIO0CTL_H                     
 0000043e  CAPTIO0CTL_L                     
@@ -1882,8 +1882,8 @@ ffffffff  __c_args__
 00004000  _c_int00_noinit_noargs_noexit_mpu
 0000fffe  _reset_vector                    
 00002b60  _stack                           
-0001006e  _system_pre_init                 
-00010068  abort                            
+00010072  _system_pre_init                 
+0001006c  abort                            
 00004000  fram_ipe_end                     
 00004000  fram_ipe_start                   
 00004000  fram_rw_start                    
@@ -3453,9 +3453,9 @@ address   name
 0000fffe  _reset_vector                    
 00010000  main                             
 00010040  __mpu_init                       
-00010068  C$$EXIT                          
-00010068  abort                            
-0001006e  _system_pre_init                 
+0001006c  C$$EXIT                          
+0001006c  abort                            
+00010072  _system_pre_init                 
 ffffffff  __TI_pprof_out_hndl              
 ffffffff  __TI_prof_data_size              
 ffffffff  __TI_prof_data_start             
