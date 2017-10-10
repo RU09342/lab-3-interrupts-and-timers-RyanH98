@@ -13,7 +13,7 @@
     #define LED1 BIT1
     #define BUTTON BIT3
     int LED1pin = 1;
-    int BUTTONpin = 1;
+    int BUTTONpin = 1; //Instead of this int shit, i need to #define pinDIR P1DIR, etc...
 
 #elif defined(__MSP430F5529__)
     #define LED0 BIT0
