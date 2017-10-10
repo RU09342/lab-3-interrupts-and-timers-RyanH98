@@ -8,16 +8,16 @@ unsigned int debouncing = 0;
 void main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;       // stop watchdog timer
-    P1DIR |= LED0;                  // configure P1.0 and 1.6 as output
+    P1DIR |= LED0;                  // configure LED as output
 
     P1OUT &= ~LED0;                 //Set the initial LED condition to off.
 
-    P1DIR &= ~BUTTON;               //Set P1.3 (Button) as an input
-    P1REN |= BUTTON;                //Enable the pull resistor on P1.3
-    P1OUT |= BUTTON;                //Tell the pull resistor to pull up
-    P1IE |= BUTTON;                 //Enable interrupt on P1.3
-    P1IES |= BUTTON;                //Set the P1.3 interrupt to trigger on a high->low edge.
-    P1IFG &= ~BUTTON;               //Clear the interrupt flag register on P1.3
+    BDIR &= ~BUTTON;               //Set BUTTON as an input
+    BREN |= BUTTON;                //Enable the pull resistor on BUTTON
+    BOUT |= BUTTON;                //Tell the pull resistor to pull up
+    BIE |= BUTTON;                 //Enable interrupt on BUTTON
+    BIES |= BUTTON;                //Set the BUTTON interrupt to trigger on a high->low edge.
+    BIFG &= ~BUTTON;               //Clear the interrupt flag register on BUTTON
 
     TA0CCTL0 = CCIE;                //Enable interrupts for the first capture/compare register.
     TA0CTL = TASSEL_2 + MC_2;       //Set the Timer_A0 control to:
@@ -56,6 +56,6 @@ __interrupt void Port_1(void) {
 
     lastButton = button;                //Update 'lastButton' with 'button'.
 
-    P1IFG &= ~BUTTON;                   //P1.3 IFG cleared
-    P1IES ^= BUTTON;                    //Toggle the interrupt edge so that this interrupt triggers on the button press and release.
+    BIFG &= ~BUTTON;                   //P1.3 IFG cleared
+    BIES ^= BUTTON;                    //Toggle the interrupt edge so that this interrupt triggers on the button press and release.
 }

@@ -6,7 +6,7 @@ unsigned int time = 0;
 void main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;       // stop watchdog timer
-    P1DIR |= LED0;                  // configure P1.0 and 1.6 as output
+    P1DIR |= LED0;                  // configure LED0
 
     P1OUT &= ~LED0;                 //Set the initial LED condition to off.
 
