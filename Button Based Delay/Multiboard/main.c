@@ -1,4 +1,3 @@
-#include <msp430.h>
 #include <config.h> //Include the config file for multiboard functionality.
 
 unsigned int count, time, button, lastButton, timeStart, timeEnd, overflows = 0;   //Define the integers, which are used later.

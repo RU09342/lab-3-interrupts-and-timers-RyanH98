@@ -1,4 +1,3 @@
-#include <msp430.h>
 #include <config.h>
 
 unsigned int time = 0;

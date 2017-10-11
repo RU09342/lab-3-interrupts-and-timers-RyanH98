@@ -9,6 +9,8 @@
 #define CONFIG_H_
 
 #if defined(__MSP430G2553__)
+    #include <msp430g2553.h>
+
     #define LED0 BIT0 //Define bits for the LEDs and BUTTON.
     #define LED1 BIT1
     #define BUTTON BIT3
@@ -22,9 +24,11 @@
     #define BIE P1IE
     #define BIES P1IES
     #define BIFG P1IFG
-    #define BUTTONVECTOR PORT1_VECTOR
+    #define BIN P1IN
 
 #elif defined(__MSP430F5529__)
+    #include <msp430f5529.h>
+
     #define LED0 BIT0
     #define LED1 BIT7
     #define BUTTON BIT1
@@ -38,9 +42,10 @@
     #define BIE P2IE
     #define BIES P2IES
     #define BIFG P2IFG
-    #define BUTTONVECTOR PORT2_VECTOR
+    #define BIN P2IN
 
 #elif defined(__MSP430FR6989__)
+    #include <msp430fr6989.h>
     #define LED0 BIT0
     #define LED1 BIT7
     #define BUTTON BIT1
@@ -54,9 +59,11 @@
     #define BIE P1IE
     #define BIES P1IES
     #define BIFG P1IFG
-    #define BUTTONVECTOR PORT1_VECTOR
+    #define BIN P1IN
 
 #elif defined(__MSP430FR5994__)
+    #include <msp430fr5994.h>
+
     #define LED0 BIT0
     #define LED1 BIT2
     #define BUTTON BIT6
@@ -70,9 +77,11 @@
     #define BIE P5IE
     #define BIES P5IES
     #define BIFG P5IFG
-    #define BUTTONVECTOR PORT5_VECTOR
+    #define BIN P5IN
 
 #elif defined(__MSP430FR2311__)
+    #include <msp430fr2311.h>
+
     #define LED0 BIT0
     #define LED1 BIT1
     #define BUTTON BIT1
@@ -86,7 +95,7 @@
     #define BIE P1IE
     #define BIES P1IES
     #define BIFG P1IFG
-    #define BUTTONVECTOR PORT1_VECTOR
+    #define BIN P1IN
 
 #else
   #error "Unsupported board detected!"
