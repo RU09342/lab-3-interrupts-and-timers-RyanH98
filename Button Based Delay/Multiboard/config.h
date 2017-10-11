@@ -22,6 +22,7 @@
     #define BIE P1IE
     #define BIES P1IES
     #define BIFG P1IFG
+    #define BUTTONVECTOR PORT1_VECTOR
 
 #elif defined(__MSP430F5529__)
     #define LED0 BIT0
@@ -37,6 +38,7 @@
     #define BIE P2IE
     #define BIES P2IES
     #define BIFG P2IFG
+    #define BUTTONVECTOR PORT2_VECTOR
 
 #elif defined(__MSP430FR6989__)
     #define LED0 BIT0
@@ -52,6 +54,7 @@
     #define BIE P1IE
     #define BIES P1IES
     #define BIFG P1IFG
+    #define BUTTONVECTOR PORT1_VECTOR
 
 #elif defined(__MSP430FR5994__)
     #define LED0 BIT0
@@ -67,6 +70,7 @@
     #define BIE P5IE
     #define BIES P5IES
     #define BIFG P5IFG
+    #define BUTTONVECTOR PORT5_VECTOR
 
 #elif defined(__MSP430FR2311__)
     #define LED0 BIT0
@@ -82,6 +86,7 @@
     #define BIE P1IE
     #define BIES P1IES
     #define BIFG P1IFG
+    #define BUTTONVECTOR PORT1_VECTOR
 
 #else
   #error "Unsupported board detected!"

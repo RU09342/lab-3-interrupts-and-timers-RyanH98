@@ -41,7 +41,7 @@ __interrupt void Timer_A0 (void) {
         overflows++;                    //If the capture/compare register says that the interrupt was caused by an overflow, increment 'overflows'.
 }
 
-#pragma vector=PORT1_VECTOR             //Set the port 1 interrupt routine
+#pragma vector=BUTTONVECTOR             //Set the port 1 interrupt routine
 __interrupt void Port_1(void) {
     button ^= 1;                        //Toggle the button variable.
     if ((button == 1) && (lastButton == 0)){    //If the button has been pressed, this if statement will trigger.
