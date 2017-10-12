@@ -13,6 +13,10 @@ This takes TACTL (Timer A Control) and sets it to TASSEL_2 (Timer A select 2, SM
 Any code inside of the interrupt vector will run whenever the timer increments. In this case, the code is to toggle an LED.
 ## Devices
 There is timer interrupt code for the MSP430G2553. There is also a multi-board compatible code which will function on the MSP430G2553, the MSP430FR5994, the MSP430FR6989, the MSP430FR2311, and the MSP430F5529.
+### Board-specific Differences
+The pin assignment differences are covered by the inclusion of the config.h file. The main reason that the MSP430FR2311 has seperate code from the others is that it requires the use of Timer B in the code instead of Timer A.
+## Usage
+This code can be programmed onto any of the compatible boards through Code Composer Studio. Once programmed onto the board, the LED will blink at a regular interval.
 ## Extra Work
 For the extra work for Lab 3, I made the TIMER A Blink code compatible with any of the five MSP430 boards. I did this by writing a header file named config.h
 

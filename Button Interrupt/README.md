@@ -14,7 +14,7 @@ This code defines what the processor does when the button interrupt triggers. Wh
 ## Devices
 Code is included for the MSP430G2553, the MSP430FR5994, the MSP430FR6989, the MSP430FR2311, and the MSP430F5529.
 ## Usage
-Once the code is loaded onto the assigned board, the LED will toggle whenever the button is pressed down.
+Once the code is loaded onto the assigned board with Code Composer Studio, the LED will toggle whenever the button is pressed down.
 ### Other Uses
 The use of interrupt vectors and low power mode allows the processor to save a large amount of power. This is very useful in data processing, where the processor will be able to idle whenever it isn't gathering data. This is also useful for consumer products, where the device would use very little power until a button was pressed, for example.
 ### Possible Improvements
