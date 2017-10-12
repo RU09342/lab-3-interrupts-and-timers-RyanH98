@@ -1,3 +1,0 @@
-# Reaction Game
-### Ryan Hare
-
